@@ -1,0 +1,149 @@
+//created on: Nov 3, 2012
+package uic.onlinerealtor.drools
+
+//list any import classes here.
+import uic.onlinerealtor.entities.Question;
+
+
+//declare any global variables here
+global Question nextQuestion;
+
+rule "Your Zeroth Rule"
+salience 100
+
+    when 
+    item : Question(questionId==0,userAns=="Student")
+        
+    then
+        nextQuestion.setQuestionId(1);
+        nextQuestion.setQuestion("<input type=\"hidden\" name=\"frameType\" value=\"isEarning\"> "+
+		"<table><tr><td><h2>Are you Earning</h2></td></tr>"+
+		"<tr><td><input type=\"radio\" name=\"isEarning\" value=\"YesEarning\" checked=\"true\">Yes</td></tr>"+
+		"<tr><td><input type=\"radio\" name=\"isEarning\" value=\"NotEarning\" >No</td></tr></table>");        
+        System.out.println("I am in 1nd type rule"); 
+end
+
+rule "Your First Rule"
+salience 89
+
+    when 
+    item : Question(questionId==1,userAns=="true") or Question(questionId==9)
+        
+    then
+        nextQuestion.setQuestionId(2);
+        nextQuestion.setQuestion("<table><tr><td><h2>Please Provide the income range</h2></td></tr>"+
+"<tr><td><input type=radio name=\"incomeRange\" value=\"low\" checked=\"true\"/>less than $5000</td></tr>"+
+"<tr><td><input type=radio name=\"incomeRange\" value=\"medium\"  />$5000-$20000</td></tr>"+
+"<tr><td><input type=radio name=\"incomeRange\" value=\"high\" />greater than $20000</td></tr>"+
+"</table>"); 
+end
+
+rule "Your Second Rule"
+    //include attributes such as "salience" here...
+    salience 80
+     when 
+    item : Question(questionId==1,userAns=="false") or Question(questionId==2)
+           
+    then
+        nextQuestion.setQuestionId(3);
+        nextQuestion.setQuestion("<table><tr><td> <h2>Please Pick the Location:</h2></td></tr>"+
+"<tr><td><select name=\"preferredLocation\" onfocus=\"None\">"+
+"<option>None</option>"+
+"<option>Chicago</option>"+
+"<option>Dallas</option>"+
+"<option>Charlotte</option>"+
+"</select></td></tr>"+
+"<tr><td><h2>suburb/Downtown</h2></td></tr>"+
+"<tr><td><input type=radio name=\"subUrbOrDownTown\" value=\"suburb\" checked=\"true\"/>Suburb</td></tr>"+
+"<tr><td><input type=radio name=\"subUrbOrDownTown\" value=\"downtown\" />Downtown</td></tr>"+
+"<tr><td><h2>Housetype</h2></td></tr>"+
+"<tr><td><input type=radio name=\"houseType\" value=\"Apartment\" checked=\"true\" /> Apartment</td></tr>"+
+"<tr><td><input type=radio name=\"houseType\" value=\"Independent\"  />Independent House</td></tr></table>");        
+        System.out.println("I am in 3nd type rule"); 
+end
+
+    rule "Your Third Rule"
+    //include attributes such as "salience" here...
+    salience 70
+     when 
+    item : Question(questionId==3,userAns=="IndependentHouse")
+        
+    then
+        nextQuestion.setQuestionId(4);
+        nextQuestion.setQuestion("<table><tr><td> <h2>Please select the Number of Storeys</h2></td></tr>"+
+        "<tr><td> <input type=radio name=\"storeys\" value=\"1\" checked=\"true\" />1</td></tr>"+
+"<tr><td> <input type=radio name=\"storeys\" value=\"2\" />2</td></tr>"+
+"<tr><td> <input type=radio name=\"storeys\" value=\"3\"/>3</td></tr></table>");        
+		System.out.println("I am in 4th type rule");
+end
+
+rule "Your Fourth Rule"
+    //include attributes such as "salience" here...
+    salience 60
+     when 
+    item : Question(questionId==3,userAns=="Apartment") or Question(questionId==4)
+        
+    then
+        nextQuestion.setQuestionId(5);
+        nextQuestion.setQuestion("<table><tr><td><h2>Number of Bedrooms</h2></td></tr>"+
+"<tr><td><input type=\"radio\" name=\"BedRooms\" value=\"1\" checked=\"true\" />1</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"BedRooms\" value=\"2\"  />2-3</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"BedRooms\" value=\"3\" /><3</td></tr>"+
+"<tr><td><h2>MarritalStatus</h2></td></tr>"+
+"<tr><td><input type=\"radio\" name=\"MarritalStatus\" value=\"married\" checked=\"true\" />Married</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"MarritalStatus\" value=\"notmarried\" />Not Married</td></tr></table>");    
+end
+
+rule "Your Fifth Rule"
+    //include attributes such as "salience" here...
+    salience 50
+     when 
+    item : Question(questionId==5,userAns=="married")
+        
+    then
+        nextQuestion.setQuestionId(6);
+        nextQuestion.setQuestion("<table><tr><td><h2>Do you have Children?</h2></td></tr>"+
+"<tr><td><input type=\"radio\" name=\"Children\" value=\"yes\" checked=\"true\" />Yes</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"Children\" value=\"no\" />No</td></tr></table>");   
+end
+
+rule "Your sixth Rule"
+    //include attributes such as "salience" here...
+    salience 40
+    when 
+    item : Question(questionId==6,userAns=="yes")
+        
+    then
+        nextQuestion.setQuestionId(7);
+        nextQuestion.setQuestion("<table><tr><td><h2>Please select the age range of Children</h2></td></tr>"+
+"<tr><td><input type=\"radio\" name=\"age\" value=\"small\" checked=\"true\" /><10</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"age\" value=\"big\" />10-20</td></tr></table>");
+end
+
+rule "Your Seventh Rule"
+    //include attributes such as "salience" here...
+    salience 30
+    when 
+    item : Question(questionId==5,userAns=="notmarried") or Question(questionId==6,userAns=="no") or Question(questionId==7)
+        
+    then
+        nextQuestion.setQuestionId(8);
+        nextQuestion.setQuestion("<table><tr><td><h2>Please mention the number of people staying at home?</h2></td></tr>"+
+"<tr><td><input type=\"text\" name=\"No of people\" value=\"2\"</div></td></tr>"+
+"<tr><td><h2>Pets?</h2></td></tr>"+
+"<tr><td><input type=\"radio\" name=\"pets\" value=\"yes\" checked=\"true\" />yes</td></tr>"+
+"<tr><td><input type=\"radio\" name=\"pets\" value=\"no\" />no</td></tr></table>");
+end
+
+rule "Your Eighth Rule"
+salience 100
+
+    when 
+    item : Question(questionId==0,userAns=="Employee")
+        
+    then
+        nextQuestion.setQuestionId(9);
+        nextQuestion.setQuestion("<table><tr><td><h1>Please mention your employer</h1></td></tr>"+
+"<tr><td><input type=text name=\"companyName\" value=\"xxxx\"</td></tr></table>");        
+        System.out.println("I am in 1st type rule"); 
+end

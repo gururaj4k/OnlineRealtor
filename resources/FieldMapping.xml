@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Field_Mapping>
+<property name="addressline1" columnKey="addressline1" />
+<property name="addressline2" columnKey="addressline2" />
+<property name="city" columnKey="city" />
+<property name="state" columnKey="state" />
+<property name="ownername" columnKey="ownername" />
+<property name="price" columnKey="price" />
+<property name="noOfBedrooms" columnKey="noofbedrooms" />
+<property name="latitude" columnKey="latitude" />
+<property name="longitude" columnKey="longitude" />
+<property name="assetKey" columnKey="assetid" />
+<property name="amenities" columnKey="amenities" />
+<property name="typesofrooms" columnKey="typesofrooms" />
+<property name="floortype" columnKey="floortype" />
+<property name="typeofroof" columnKey="typeofroof" />
+<property name="fullyfurnished" columnKey="fullyfurnished" />
+<property name="clubmembership" columnKey="clubmembership" />
+<property name="ownercontact" columnKey="ownercontact" />
+<property name="estgasbill" columnKey="Estgasbill" />
+<property name="ageofhome" columnKey="ageofhome" />
+<property name="distfromdowntown" columnKey="Dist from downtown" />
+<property name="section" columnKey="section" />
+
+
+</Field_Mapping>

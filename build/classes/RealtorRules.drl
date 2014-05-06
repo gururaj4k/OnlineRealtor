@@ -1,0 +1,1192 @@
+//created on: Oct 24, 2012
+package uic.onlinerealtor.drools
+import uic.onlinerealtor.entities.UserAnalysis;
+import uic.onlinerealtor.entities.UserPreference;
+import java.util.*;
+
+global UserAnalysis userAnalysis;
+
+rule "1"
+salience 10 
+    when 
+    item : UserPreference(userProfession==UserPreference.UserType.Student)// condition        
+    then
+        userAnalysis.setBaseMultiplicationFactor(.8f);// consequence     
+end
+
+rule "2"
+    salience 9
+    when
+    item : UserPreference(userProfession==UserPreference.UserType.Employee)// condition         
+    then     
+        userAnalysis.setBaseMultiplicationFactor(1.1f);// consequence        
+end
+
+rule "3"
+    salience 10
+    when
+    item : UserPreference(userProfession==UserPreference.UserType.Employee, incomeRange<5000, incomeRange>=0) // condition   
+        
+    then
+       
+        userAnalysis.setMinPriceRange(1000);// consequence 
+        userAnalysis.setMaxPriceRance(5000);
+end
+
+rule "4"
+    salience 9
+    when
+    item : UserPreference(isEarning == true)    // condition    
+        
+    then
+        
+      userAnalysis.setNewHome(true);  // consequence  
+
+end
+
+rule "5"
+salience 50
+
+    when 
+    item : UserPreference(userProfession==UserPreference.UserType.Employee,subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb )// condition    
+        
+    then
+        userAnalysis.setNoOfParkinglots(2); // consequence  
+     
+end
+
+rule "6"
+salience 50
+
+    when 
+    item : UserPreference(userProfession==UserPreference.UserType.Employee, houseType=="Apartment" )
+        
+    then
+        userAnalysis.setNoOfParkinglots(1);  // consequence 
+end
+
+rule "13"
+  
+    salience 20
+    when
+    item : UserPreference(userProfession==UserPreference.UserType.Employee, incomeRange>=20000)   // condition 
+        
+    then
+        userAnalysis.setHasGarage("yes");// consequence
+     
+end
+
+
+
+rule "14"
+
+    salience 30
+    when
+    item : UserPreference(userProfession==UserPreference.UserType.Employee, incomeRange>=5000,pets==true)   // condition   
+        
+    then
+     
+        userAnalysis.setHasCentralizedHeating(true);// consequence  
+      
+end
+
+
+rule "15"
+  salience 40
+    when
+    item : UserPreference(incomeRange>=5000,maritalStatus=="single" )    // condition 
+        
+    then
+        
+        userAnalysis.setDishWasherAvailable(true);// consequence  
+     
+end
+
+rule "16"
+   
+    salience 50
+    when
+    item : UserPreference(incomeRange>=5000, houseType=="Independent house")  // condition   
+        
+    then
+      
+        userAnalysis.setFirePlaceAvailable(true);// consequence  
+        
+end
+
+rule "17"
+ 
+    salience 60
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, houseType=="Apartment") // condition      
+        
+    then
+     
+        userAnalysis.setFirePlaceAvailable(true);// consequence  
+      
+end
+
+rule "18"
+    
+    salience 70
+    when
+    item : UserPreference(incomeRange>=20000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown, houseType=="Apartment")  // condition 
+        
+    then
+      
+        userAnalysis.setCentralizedCoolingAvailable(true);// consequence 
+      
+end
+
+rule "19"
+
+    salience 80
+    when
+    item : UserPreference(incomeRange>=20000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,userProfession==UserPreference.UserType.Employee )  //condition  
+        
+    then
+     
+        userAnalysis.setHasGym("YES");// consequence 
+     
+end
+
+rule "20"
+   
+    salience 90
+    when
+    item : UserPreference(incomeRange>=20000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown, userProfession==UserPreference.UserType.Employee)  //condition  
+        
+    then
+        
+        userAnalysis.setIsbalconyAvailable(true);// consequence 
+       
+end
+
+rule "21"
+    salience 100
+    when
+    item : UserPreference(incomeRange>=20000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, houseType=="Independent house")   //condition 
+        
+    then
+       
+        userAnalysis.setIsbalconyAvailable(true);// consequence 
+       
+end
+
+rule "22"
+  salience 110
+    when
+    item : UserPreference(incomeRange>=20000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="single"  ) //condition   
+        
+    then
+        
+        userAnalysis.setLaundaryAvailable(true);// consequence 
+       
+end
+
+rule "23"
+   
+    salience 111
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="single",pplStayingAtHome==3)//condition     
+        
+    then
+       
+        userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+       
+end
+
+rule "24"
+  
+    salience 112
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="married")  //condition   
+        
+    then
+    
+        userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+      
+end
+
+rule "25"
+  
+    salience 113
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, maritalStatus=="single",pplStayingAtHome==1) //condition   
+        
+    then
+       
+        userAnalysis.setRecreationRoomAvailable(true);// consequence 
+        
+end
+
+rule "26"
+   
+    salience 114
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="married",pplStayingAtHome==3)  //condition   
+        
+    then
+     
+        userAnalysis.setNumberOfSprinkler(1);// consequence 
+      
+end
+
+rule "27"
+   
+    salience 115
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="single",pplStayingAtHome==1)  //condition   
+        
+    then
+        
+        userAnalysis.setSportsRoomAvailable(true);// consequence 
+        
+end
+
+rule "28"
+ 
+    salience 116
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,maritalStatus=="single",pplStayingAtHome==3,noOfStoreys==2) //condition    
+        
+    then
+        
+        userAnalysis.setSportsRoomAvailable(true);// consequence 
+       
+end
+
+rule "29"
+   
+    salience 117
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==1)  //condition  
+        
+    then
+     
+        userAnalysis.setHasClubMembership("YES");// consequence 
+        
+end
+
+rule "30"
+  
+    salience 118
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==4,pplStayingAtHome==3) //condition   
+        
+    then
+     
+        userAnalysis.setFamilyRoomAvailable(true);// consequence 
+       
+end
+
+rule "31"
+    
+    salience 119
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==4,pplStayingAtHome==1)//condition       
+        
+    then
+       
+        userAnalysis.setGuestRoomAvailable(true);// consequence 
+      
+end
+rule "32"
+    
+    salience 120
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==2,pplStayingAtHome==3)  //condition   
+        
+    then
+       
+        userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+        
+end
+
+rule "33"
+   
+    salience 121
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==3,pplStayingAtHome==3) //condition    
+        
+    then
+       
+        userAnalysis.setMastersBedRoomAvailable(true);// consequence 
+      
+end
+
+rule "34"
+  
+    salience 122
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==2,pplStayingAtHome==2) //condition    
+        
+    then
+        
+        userAnalysis.setOfficeRoomAvailable(true);// consequence 
+       
+end
+
+rule "35"
+  
+    salience 123
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==4,pplStayingAtHome==5) //condition    
+        
+    then
+        
+        userAnalysis.setHasBasement("YES");// consequence 
+       
+end
+
+rule "36"  
+    salience 124
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==1,pplStayingAtHome==2)  //condition   
+        
+    then
+        
+        userAnalysis.setTypeFloor("Cork");// consequence 
+        
+end
+rule "37"
+   
+    salience 125
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==4,pplStayingAtHome==3,pets==true) //condition    
+        
+    then
+       
+        userAnalysis.setTypeFloor("Cork");// consequence 
+        
+end
+rule "38"
+ 
+    salience 126
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pets==true,noOfStoreys==2)//condition     
+        
+    then
+      
+         userAnalysis.setHasBasement("YES");// consequence 
+        userAnalysis.setTypeFloor("Cork");
+       
+end
+rule "39"
+  
+    salience 127
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,pets==false,noOfStoreys==2)   //condition  
+        
+    then
+     
+         userAnalysis.setHasBasement("YES");// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+        userAnalysis.setTypeFloor("Cork");
+        
+end
+rule "40"
+  
+    salience 128
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,pets==false,noOfStoreys==3)   //condition  
+        
+    then
+      
+         userAnalysis.setHasBasement("NO");// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+       
+end
+rule "41"
+   
+    salience 129
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pets==true,noOfStoreys==2)    //condition 
+        
+    then
+      
+         userAnalysis.setHasBasement("NO");// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+       
+end
+rule "42"
+   
+    salience 130
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pets==true,noOfStoreys==1) //condition    
+        
+    then
+       
+         userAnalysis.setHasBasement("YES");// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+       
+end
+rule "43"
+   
+    salience 131
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown,pets==true,noOfStoreys==3)  //condition   
+        
+    then
+       
+         userAnalysis.setHasBasement("YES");// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+       
+end
+
+rule "44"
+   
+    salience 132
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pets==false)//condition     
+        
+    then
+        
+         userAnalysis.setHasBasement("YES");// consequence 
+         userAnalysis.setDownstairsRoomAvailable(true);
+         userAnalysis.setGuestRoomAvailable(true);
+        
+end
+rule "45"
+   
+    salience 133
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pets==true)  //condition   
+        
+    then
+      
+         userAnalysis.setHasBasement("NO");// consequence 
+         userAnalysis.setDownstairsRoomAvailable(true);
+         userAnalysis.setGuestRoomAvailable(false);
+        
+end
+rule "46"
+    
+    salience 134
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==1)  //condition   
+        
+    then
+       
+         userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+       
+end
+rule "47"
+   
+    salience 135
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==5)  //condition   
+        
+    then
+      
+         userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+       
+end
+rule "48"
+    
+    salience 136
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==3) //condition    
+        
+    then
+       
+         userAnalysis.setDownstairsRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+       
+end
+rule "49"
+    
+    salience 137
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==1)  //condition   
+        
+    then
+      
+         userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+        
+end
+
+rule "50"
+   
+    salience 138
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown, noOfStoreys==2,pplStayingAtHome==1) //condition    
+        
+    then
+     
+         
+         userAnalysis.setGuestRoomAvailable(true);// consequence 
+       
+end
+rule "51"
+  
+    salience 139
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown, noOfStoreys==2,pplStayingAtHome==5)    //condition  
+        
+    then
+       
+          userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+        
+end
+rule "52"
+    salience 140
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==4,pplStayingAtHome==1,pets==false)  //condition    
+        
+    then
+    
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+       
+end
+rule "53"
+  
+    salience 141
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==2,pplStayingAtHome==6,pets==false)     //condition 
+        
+    then
+       
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+       
+end
+rule "54"
+  
+    salience 142
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pplStayingAtHome==1,pets==false)  //condition    
+        
+    then
+       
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+        
+end
+rule "55"
+    
+    salience 143
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pplStayingAtHome==3,pets==false)   //condition   
+        
+    then
+    
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+         userAnalysis.setDownstairsRoomAvailable(true);
+       
+      
+end
+rule "56"
+  
+    salience 144
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown, pplStayingAtHome==2,pets==true)   //condition   
+        
+    then
+        
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+         userAnalysis.setDownstairsRoomAvailable(true);
+       
+end
+rule "57"
+    salience 145
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,  pplStayingAtHome==1,pets==true)  //condition    
+        
+    then
+      
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+         userAnalysis.setDownstairsRoomAvailable(true);
+      
+end
+rule "58"
+  
+    salience 146
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pplStayingAtHome==1) //condition     
+        
+    then
+        
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "59"
+   
+    salience 147
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,pplStayingAtHome==4) //condition     
+        
+    then
+    
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(true);
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "60"
+   
+    salience 148
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown,noOfStoreys==1 ,maritalStatus=="single") //condition     
+        
+    then
+      
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setGuestRoomAvailable(false);
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "61"
+    
+    salience 149
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,noOfStoreys==5 ,maritalStatus=="single")     //condition 
+        
+    then
+          userAnalysis.setBaseMultiplicationFactor(1.1f);// consequence 
+          userAnalysis.setFamilyRoomAvailable(false);
+         userAnalysis.setDownstairsRoomAvailable(false);
+        
+end
+rule "62"
+    
+    salience 150
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, noOfStoreys==4 ,maritalStatus=="single")  //condition    
+        
+    then
+      
+         userAnalysis.setDownstairsRoomAvailable(false);// consequence 
+        
+end
+
+rule "63"
+   
+    salience 151
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, noOfStoreys==4 ,maritalStatus=="single") //condition     
+        
+    then
+       
+         userAnalysis.setDownstairsRoomAvailable(true);// consequence 
+       
+end
+rule "64"
+    
+    salience 152
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb,maritalStatus=="single") //condition     
+        
+    then
+    
+         
+         userAnalysis.setDownstairsRoomAvailable(false);// consequence 
+      
+end
+rule "65"
+    
+    salience 153
+    when
+    item : UserPreference(incomeRange>=5000 && subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb, maritalStatus=="married")  //condition    
+        
+    then
+       
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setDownstairsRoomAvailable(true);
+       
+end
+rule "66"
+   
+    salience 154
+    when
+    item : UserPreference(incomeRange>=5000, houseType=="Apartment", noOfStoreys==3 ,maritalStatus=="married")  //condition    
+        
+    then
+      
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "67"
+    
+    salience 155
+    when
+    item : UserPreference(incomeRange>=5000, houseType=="Apartment", noOfStoreys==4 ,maritalStatus=="single") //condition     
+        
+    then
+      
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "68"
+   
+    salience 156
+    when
+    item : UserPreference(incomeRange>=5000, houseType=="Apartment", noOfStoreys==2 ,maritalStatus=="single")  //condition    
+        
+    then
+       
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+          userAnalysis.setGuestRoomAvailable(false);
+         userAnalysis.setDownstairsRoomAvailable(false);
+        
+end
+rule "69"
+   
+    salience 157
+    when
+    item : UserPreference(incomeRange>=5000, houseType=="Apartment", noOfStoreys==2 ,maritalStatus=="single")  //condition    
+        
+    then
+     
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+          userAnalysis.setGuestRoomAvailable(true);
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "70"
+    salience 158
+    when
+    item : UserPreference(incomeRange>=20000,pets==false)  //condition   
+        
+    then
+        
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+           userAnalysis.setHasBasement("YES");
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "71"
+    
+    salience 159
+    when
+    item : UserPreference(incomeRange>=5000 ,pets==true)     //condition 
+        
+    then
+   
+          userAnalysis.setFamilyRoomAvailable(false);// consequence 
+           userAnalysis.setHasBasement("NO");
+            userAnalysis.setBaseMultiplicationFactor(1.1f);
+         userAnalysis.setDownstairsRoomAvailable(false);
+       
+end
+rule "72"
+    
+    salience 160
+    when
+    item : UserPreference(incomeRange>=20000,pets==false)   //condition   
+        
+    then
+       
+          userAnalysis.setFamilyRoomAvailable(true);// consequence 
+           userAnalysis.setHasBasement("NO");
+         userAnalysis.setDownstairsRoomAvailable(true);
+       
+end
+rule "73"
+   
+    salience 161
+    when
+    item :UserPreference(incomeRange>= 5000 && < 20000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb) or UserPreference(noOfStoreys==1) or UserPreference(pplStayingAtHome==2) //condition 
+        
+    then
+       
+          userAnalysis.setHasBasement("YES");// consequence 
+           userAnalysis.setFurnished(true);
+         userAnalysis.setBaseMultiplicationFactor(1.2f);
+       
+end
+
+rule "74"
+   
+    salience 162
+    when
+    item :UserPreference(incomeRange>= 5000 && < 20000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb) or UserPreference(noOfStoreys==1) or UserPreference(maritalStatus=="single") //condition 
+        
+    then
+          userAnalysis.setHasBasement("YES");// consequence 
+           userAnalysis.setFurnished(true);
+         userAnalysis.setBaseMultiplicationFactor(1.2f);
+       
+end
+
+rule "75"
+    
+    salience 163
+    when
+    item :UserPreference(incomeRange>= 5000 && < 20000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb) or UserPreference(noOfStoreys==1) or UserPreference(maritalStatus=="married") //condition 
+        
+    then
+      
+          userAnalysis.setHasBasement("YES");// consequence 
+           userAnalysis.setFurnished(true);
+           userAnalysis.setSportsRoomAvailable(true);
+         userAnalysis.setBaseMultiplicationFactor(2.2f);
+       
+end
+
+rule "76"
+   
+    salience 164
+    when
+    item :UserPreference(incomeRange>= 5000 && < 20000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Suburb) or UserPreference(noOfStoreys==2) or UserPreference(maritalStatus=="married") //condition 
+        
+    then
+        
+          userAnalysis.setHasBasement("NO");// consequence 
+           userAnalysis.setFurnished(false);
+           userAnalysis.setSportsRoomAvailable(false);
+         
+        
+end
+
+rule "77"
+   
+    salience 165
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown) or UserPreference(noOfStoreys==3) or UserPreference(maritalStatus=="married") //condition 
+        
+    then
+        
+           userAnalysis.setCentralizedCoolingAvailable(true);// consequence 
+            userAnalysis.setHasGym("YES");
+           userAnalysis.setIsbalconyAvailable(true);
+        
+end
+
+rule "78"
+ 
+    salience 166
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown) or UserPreference(pplStayingAtHome==1) or UserPreference(maritalStatus=="married") //condition 
+        
+    then
+        
+           userAnalysis.setCentralizedCoolingAvailable(false);// consequence 
+            userAnalysis.setHasGym("YES");
+           userAnalysis.setIsbalconyAvailable(true);
+       
+end
+
+rule "79"
+  
+    salience 167
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown) or UserPreference(pplStayingAtHome==2) or UserPreference(maritalStatus=="married") //condition 
+        
+    then
+     
+           userAnalysis.setCentralizedCoolingAvailable(false);// consequence 
+            userAnalysis.setHasGym("true");
+           userAnalysis.setIsbalconyAvailable(false);
+       
+end
+
+rule "80"
+   
+    salience 168
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(subUrbOrDownTown==UserPreference.SubUrbOrDownTown.Downtown) or UserPreference(pplStayingAtHome==3) or UserPreference(maritalStatus=="single") //condition 
+        
+    then
+    
+           userAnalysis.setCentralizedCoolingAvailable(false);// consequence 
+            userAnalysis.setHasGym("NO");
+           userAnalysis.setIsbalconyAvailable(false);
+       
+end
+rule "81"
+  
+    salience 169
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(pplStayingAtHome==3) or UserPreference(pets==true) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setRecreationRoomAvailable(true);
+           userAnalysis.setIsbalconyAvailable(false);
+      
+end
+
+rule "82"
+ 
+    salience 170
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference(pplStayingAtHome==3) or UserPreference(pets==false) //condition 
+        
+    then
+        
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setRecreationRoomAvailable(false);
+           userAnalysis.setIsbalconyAvailable(false);
+        
+end
+
+rule "83"
+
+    salience 171
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Apartment") or UserPreference(pets==false) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setRecreationRoomAvailable(true);
+           userAnalysis.setIsbalconyAvailable(true);
+        
+end
+
+rule "84"
+    
+    salience 172
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Independent") or UserPreference(pets==true) //condition 
+        
+    then
+      
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setRecreationRoomAvailable(true);
+           userAnalysis.setIsbalconyAvailable(true);
+       
+end
+
+rule "85"
+   
+    salience 173
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Apartment") or UserPreference(pets==true) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+       
+end
+
+rule "86"
+ 
+    salience 174
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==2) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("YES");
+       
+end
+rule "87"
+  
+    salience 175
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==3) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("YES");
+       
+end
+
+rule "88"
+   
+    salience 176
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==4) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("YES");
+       
+end
+
+rule "89"
+   
+    salience 177
+    when
+    item :UserPreference(incomeRange>= 5000) or UserPreference( houseType=="Independent") or UserPreference(noOfStoreys==1) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("NO");
+        
+end
+
+rule "90"
+    
+    salience 178
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="married" ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==1) //condition 
+        
+    then
+      
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("NO");
+       
+end
+rule "91"
+ 
+    salience 179
+    when
+    item :UserPreference(incomeRange>= 20000,maritalStatus=="single" ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==1) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("NO");
+       
+end
+
+rule "92"
+   
+    salience 180
+    when
+    item :UserPreference(incomeRange>= 20000,maritalStatus=="married" ) or UserPreference( houseType=="Independent") or UserPreference(noOfStoreys==1) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("NO");
+       
+end
+
+rule "93"
+  
+    salience 181
+    when
+    item :UserPreference(incomeRange>= 20000,maritalStatus=="single" ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==2) //condition 
+        
+    then
+      
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("NO");
+            userAnalysis.setHasGym("YES");
+     
+end
+
+rule "94"
+  
+    salience 182
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="single" ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==2) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("NO");
+            userAnalysis.setHasGym("NO");
+       
+end
+rule "95"
+   
+    salience 183
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="married" ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==3) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("YES");
+            userAnalysis.setHasGym("NO");
+      
+end
+
+rule "96"
+    
+    salience 184
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="married",pets==false ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==3) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("YES");
+            userAnalysis.setHasGym("YES");
+      
+end
+
+rule "97"
+   
+    salience 185
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="married",pets==false ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==3) //condition 
+        
+    then
+       
+            userAnalysis.setSwimmingPoolAvailable(false);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("YES");
+            userAnalysis.setHasGym("YES");
+     
+end
+
+rule "98"
+   
+    salience 186
+    when
+    item :UserPreference(incomeRange>= 20000,maritalStatus=="single",pets==false ) or UserPreference( houseType=="Apartment") or UserPreference(noOfStoreys==1) //condition 
+        
+    then
+    
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("YES");
+            userAnalysis.setHasGym("NO");
+        
+end
+
+rule "99"
+    
+    salience 187
+    when
+    item :UserPreference(incomeRange>= 5000,maritalStatus=="married",pets==true ) or UserPreference( houseType=="Independant") or UserPreference(noOfStoreys==2) //condition 
+        
+    then
+      
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(false);
+            userAnalysis.setHasClubMembership("NO");
+            userAnalysis.setHasGym("NO");
+       
+end
+
+rule "100"
+ 
+    salience 188
+    when
+    item :UserPreference(incomeRange>= 20000,maritalStatus=="married",pets==false ) or UserPreference( houseType=="Apartent") or UserPreference(noOfStoreys==2) //condition 
+        
+    then
+     
+            userAnalysis.setSwimmingPoolAvailable(true);// consequence 
+           userAnalysis.setIsbalconyAvailable(true);
+            userAnalysis.setHasClubMembership("NO");
+            userAnalysis.setFamilyRoomAvailable(true);
+            userAnalysis.setHasGym("NO");
+        
+end
